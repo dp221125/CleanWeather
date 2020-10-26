@@ -14,7 +14,7 @@ import OAuthSwift
 /*
 https://github.com/OAuthSwift/OAuthSwiftAlamofire
 
-I don't know this repo notworking...
+I don't know why, but this repo and my repo crash.
 so i edited for use in Moya
 */
 
@@ -23,9 +23,7 @@ class OAuthInterceptor: RequestInterceptor {
 	let oauthSwift: OAuthSwift
 	
 	init() {
-		
 		let key = parseKeys()
-		
 		self.oauthSwift = OAuth1Swift(consumerKey: key.consumerKey,
 									  consumerSecret: key.consumerSecret)
 	}
