@@ -31,26 +31,8 @@ struct CurrentObservation: Codable {
 
 // MARK: - Astronomy
 struct Astronomy: Codable {
-	let sunrise: Date
-	let sunset: Date
-	
-	init(from decoder: Decoder) throws {
-		
-		let dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = "h:mm a"
-		let values = try decoder.container(keyedBy: CodingKeys.self)
-		let sunriseString = try values.decode(String.self, forKey: .sunrise)
-		let sunsetString = try values.decode(String.self, forKey: .sunset)
-		if let sunrise = dateFormatter.date(from: sunriseString),
-		   let sunset = dateFormatter.date(from: sunsetString) {
-			self.sunrise = sunrise
-			self.sunset = sunset
-		} else {
-			self.sunrise = Date()
-			self.sunset = Date()
-		}
-		
-	}
+	let sunrise: String
+	let sunset: String
 }
 
 // MARK: - Atmosphere
@@ -74,9 +56,31 @@ struct Wind: Codable {
 // MARK: - Forecast
 struct Forecast: Codable {
 	let day: String
-	let date, low, high: Int
+	let date: Date
+	let low, high: Int
 	let text: String
 	let code: Int
+	
+	init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		
+		self.day = try values.decode(String.self, forKey: .day)
+		self.low = try values.decode(Int.self, forKey: .low)
+		self.high = try values.decode(Int.self, forKey: .high)
+		self.code = try values.decode(Int.self, forKey: .code)
+		self.text = try values.decode(String.self, forKey: .text)
+		
+		let stringDate = try values.decode(Int.self, forKey: .date)
+		let timeIntervalDate = Date(timeIntervalSince1970: TimeInterval(stringDate))
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "yyyy/MM/dd"
+		dateFormatter.locale = Locale(identifier: "ko-kr")
+		dateFormatter.timeZone = TimeZone(identifier: "KST")
+		let date = dateFormatter.string(from: timeIntervalDate)
+		self.date = dateFormatter.date(from: date)!
+		
+	}
+	
 }
 
 // MARK: - Location
