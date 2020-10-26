@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B06C92FD4C1D5C8EC507474D /* Pods_CleanWeahter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7891AA3805F674B1DED8D2DE /* Pods_CleanWeahter.framework */; };
+		C39C446B2546E9720071320B /* TodayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39C446A2546E9720071320B /* TodayCell.swift */; };
+		C39C446F2546E9820071320B /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39C446E2546E9820071320B /* BaseTableViewCell.swift */; };
 		C3CF14B7254691AE007E80FB /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CF14B1254691AE007E80FB /* MainPresenter.swift */; };
 		C3CF14B8254691AE007E80FB /* MainWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CF14B2254691AE007E80FB /* MainWorker.swift */; };
 		C3CF14B9254691AE007E80FB /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CF14B3254691AE007E80FB /* MainRouter.swift */; };
@@ -26,7 +28,6 @@
 		C3E99F6825465974002E2A3F /* AccessTokenPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E99F6725465974002E2A3F /* AccessTokenPlugin.swift */; };
 		C3E99F6C25465A6D002E2A3F /* WeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E99F6B25465A6D002E2A3F /* WeatherAPI.swift */; };
 		C3E99F7225465CB5002E2A3F /* MainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E99F7125465CB5002E2A3F /* MainRepository.swift */; };
-		C3E99F7D2546621B002E2A3F /* Development.xcconfig in Sources */ = {isa = PBXBuildFile; fileRef = C3E99F7C2546621B002E2A3F /* Development.xcconfig */; };
 		C3E99F9F25466571002E2A3F /* SettingKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E99F9E25466571002E2A3F /* SettingKey.swift */; };
 		C3E99FA52546662A002E2A3F /* CommonFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E99FA42546662A002E2A3F /* CommonFunc.swift */; };
 /* End PBXBuildFile section */
@@ -35,6 +36,8 @@
 		7891AA3805F674B1DED8D2DE /* Pods_CleanWeahter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CleanWeahter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99AB0B37B487DF8C621B758B /* Pods-CleanWeahter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CleanWeahter.debug.xcconfig"; path = "Target Support Files/Pods-CleanWeahter/Pods-CleanWeahter.debug.xcconfig"; sourceTree = "<group>"; };
 		B791433AA4AEA081CA141038 /* Pods-CleanWeahter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CleanWeahter.release.xcconfig"; path = "Target Support Files/Pods-CleanWeahter/Pods-CleanWeahter.release.xcconfig"; sourceTree = "<group>"; };
+		C39C446A2546E9720071320B /* TodayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayCell.swift; sourceTree = "<group>"; };
+		C39C446E2546E9820071320B /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		C3CF14B1254691AE007E80FB /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		C3CF14B2254691AE007E80FB /* MainWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWorker.swift; sourceTree = "<group>"; };
 		C3CF14B3254691AE007E80FB /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
@@ -89,6 +92,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		C39C44692546E9640071320B /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				C39C446A2546E9720071320B /* TodayCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		C3E99EE625464E30002E2A3F = {
 			isa = PBXGroup;
 			children = (
@@ -139,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				C3E99F0F25464FCD002E2A3F /* BaseViewController.swift */,
+				C39C446E2546E9820071320B /* BaseTableViewCell.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -164,6 +176,7 @@
 		C3E99F6F25465CAC002E2A3F /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				C39C44692546E9640071320B /* Cell */,
 				C3E99F7025465CAF002E2A3F /* Repository */,
 				C3CF14B1254691AE007E80FB /* MainPresenter.swift */,
 				C3CF14B2254691AE007E80FB /* MainWorker.swift */,
@@ -325,13 +338,14 @@
 				C3E99F7225465CB5002E2A3F /* MainRepository.swift in Sources */,
 				C3CF14B9254691AE007E80FB /* MainRouter.swift in Sources */,
 				C3E99FA52546662A002E2A3F /* CommonFunc.swift in Sources */,
+				C39C446F2546E9820071320B /* BaseTableViewCell.swift in Sources */,
 				C3E99F6C25465A6D002E2A3F /* WeatherAPI.swift in Sources */,
 				C3E99F1025464FCD002E2A3F /* BaseViewController.swift in Sources */,
 				C3E99EFD25464E30002E2A3F /* CleanWeahter.xcdatamodeld in Sources */,
 				C3CF14B7254691AE007E80FB /* MainPresenter.swift in Sources */,
-				C3E99F7D2546621B002E2A3F /* Development.xcconfig in Sources */,
 				C3CF14BC254691AE007E80FB /* MainInteractor.swift in Sources */,
 				C3E99F64254655EF002E2A3F /* OAuthInterceptor.swift in Sources */,
+				C39C446B2546E9720071320B /* TodayCell.swift in Sources */,
 				C3E99F9F25466571002E2A3F /* SettingKey.swift in Sources */,
 				C3E99F6825465974002E2A3F /* AccessTokenPlugin.swift in Sources */,
 				C3E99F20254652AD002E2A3F /* NetworkingProtocol.swift in Sources */,
