@@ -22,6 +22,7 @@ class MainViewController: BaseViewController, MainDisplayLogic {
 	var interactor: MainBusinessLogic?
 	var router: (NSObjectProtocol & MainRoutingLogic & MainDataPassing)?
 	var weather: Weather?
+	var cache = Cache()
 	
 	// MARK: Object lifecycle
 	
@@ -30,8 +31,10 @@ class MainViewController: BaseViewController, MainDisplayLogic {
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		tableView.tableFooterView = UIView()
 		tableView.register(TodayCell.self, forCellReuseIdentifier: "\(TodayCell.self)")
+		tableView.register(ForecastCell.self, forCellReuseIdentifier:  "\(ForecastCell.self)")
 		tableView.dataSource = self
 		tableView.delegate = self
+		tableView.allowsSelection = false
 		return tableView
 	}()
 	
@@ -113,7 +116,12 @@ class MainViewController: BaseViewController, MainDisplayLogic {
 }
 extension MainViewController: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 1
+		
+		if let weather = self.weather {
+			return weather.forecasts.count + 1
+		} else {
+			return 0
+		}
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -123,13 +131,20 @@ extension MainViewController: UITableViewDataSource {
 		}
 		
 		let celltype = CellType(rawValue: indexPath.row)!
-		if celltype == .tdoay,
+		if celltype == .today,
 		   let cell = tableView.dequeueReusableCell(withIdentifier: "\(TodayCell.self)", for: indexPath) as? TodayCell {
-			
+			cell.configure(cache: self.cache)
 			let todayDTO = TodayDTO(cityName: weather.location.city, regionName: weather.location.region, weather: weather.currentObservation.condition.text, temp: "\(weather.currentObservation.condition.temperature)", weatherCode: weather.currentObservation.condition.code)
 			cell.bindUI(todayDTO: todayDTO)
 			
 			return cell
+		} else if celltype == .forcast,
+				  let cell = tableView.dequeueReusableCell(withIdentifier: "\(ForecastCell.self)", for: indexPath) as? ForecastCell {
+			cell.configure(cache: self.cache)
+			
+			let forcast = weather.forecasts[indexPath.row - 1]
+			let dto = ForecastDTO(weekend: forcast.day, date: forcast.date, minTemp: forcast.low, maxTemp: forcast.high, weatherCode: forcast.code)
+			cell.bindUI(dto: dto)
 		}
 		
 		return UITableViewCell()
@@ -140,17 +155,23 @@ extension MainViewController: UITableViewDataSource {
 }
 extension MainViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return 200
+		
+		let cellType = CellType(rawValue: indexPath.row)!
+		if cellType == .today {
+			return 200
+		} else {
+			return 90
+		}
 	}
 }
 
 enum CellType: Int {
-	case tdoay
+	case today
 	case forcast
 	
 	init?(rawValue: Int) {
 		if rawValue == 0 {
-			self = .tdoay
+			self = .today
 		} else {
 			self = .forcast
 		}

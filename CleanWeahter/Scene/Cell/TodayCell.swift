@@ -9,6 +9,8 @@ import UIKit
 
 class TodayCell: BaseTableViewCell {
 	
+	weak var cache: Cache?
+	
 	private let cityLabel: UILabel = {
 		let cityLabel = UILabel()
 		cityLabel.font = .boldSystemFont(ofSize: 36)
@@ -64,6 +66,11 @@ class TodayCell: BaseTableViewCell {
 		return lineView
 	}()
 	
+	func configure(cache: Cache) {
+		super.configure()
+		self.cache = cache
+	}
+	
 	override func configureUI() {
 		super.configureUI()
 		
@@ -116,18 +123,37 @@ class TodayCell: BaseTableViewCell {
 	func bindUI(todayDTO: TodayDTO) {
 
 		DispatchQueue.main.async {
+			
+			if let imageData = self.cache?.imageCache.object(forKey: String(todayDTO.weatherCode) as NSString ) {
+				DispatchQueue.main.async {
+					self.weatherImageView.image = UIImage(data: imageData as Data)
+				}
+				
+			}
+			
 			self.cityLabel.text = todayDTO.cityName
 			self.regionLabel.text = todayDTO.regionName
 			self.weatherLabel.text = todayDTO.weather
 			
 			self.tempLabel.text = todayDTO.temp
 			
-			if let iamgeURL = URL(string: "http://l.yimg.com/a/i/us/we/52/\(todayDTO.weatherCode).gif"),
-			   let weatherImageData = try? Data(contentsOf: iamgeURL) {
-				self.weatherImageView.image = UIImage(data: weatherImageData)
+			DispatchQueue.global().async {
+				if let iamgeURL = URL(string: "http://l.yimg.com/a/i/us/we/52/\(todayDTO.weatherCode).gif"),
+				   let weatherImageData = try? Data(contentsOf: iamgeURL) {
+					DispatchQueue.main.async {
+						self.cache?.imageCache.setObject(weatherImageData as NSData, forKey: String(todayDTO.weatherCode) as NSString )
+						self.weatherImageView.image = UIImage(data: weatherImageData)
+					}
+					
+				}
 			}
+
 			
 		}
 		
+	}
+	
+	override func prepareForReuse() {
+		self.weatherImageView.image = nil
 	}
 }

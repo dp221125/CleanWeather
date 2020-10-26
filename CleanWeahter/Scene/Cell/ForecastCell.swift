@@ -7,7 +7,19 @@
 
 import UIKit
 
+class Cache {
+	
+	let imageCache: NSCache<NSString, NSData>
+	
+	init() {
+		self.imageCache = NSCache<NSString, NSData>()
+	}
+	
+}
+
 class ForecastCell: BaseTableViewCell {
+	
+	weak var cache: Cache?
 	
 	let weekendLabel: UILabel = {
 		let weekendLabel = UILabel()
@@ -40,6 +52,11 @@ class ForecastCell: BaseTableViewCell {
 		return weatherImageView
 	}()
 	
+	func configure(cache: Cache) {
+		super.configure()
+		self.cache = cache
+	}
+	
 	override func configureUI() {
 		super.configureUI()
 		
@@ -60,8 +77,8 @@ class ForecastCell: BaseTableViewCell {
 		])
 		
 		NSLayoutConstraint.activate([
-			dateLabel.topAnchor.constraint(equalTo: weekendLabel.topAnchor, constant: 8),
-			weekendLabel.leadingAnchor.constraint(equalTo: weekendLabel.leadingAnchor)
+			dateLabel.topAnchor.constraint(equalTo: weekendLabel.bottomAnchor, constant: 8),
+			dateLabel.leadingAnchor.constraint(equalTo: weekendLabel.leadingAnchor)
 		])
 		
 		NSLayoutConstraint.activate([
@@ -72,8 +89,7 @@ class ForecastCell: BaseTableViewCell {
 		NSLayoutConstraint.activate([
 			weatherImageView.widthAnchor.constraint(equalToConstant: 44),
 			weatherImageView.heightAnchor.constraint(equalTo: weatherImageView.widthAnchor),
-			weatherImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16),
-			weatherImageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16),
+			weatherImageView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
 			weatherImageView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16)
 		])
 	
@@ -91,11 +107,34 @@ class ForecastCell: BaseTableViewCell {
 			
 			self.minMaxTempLabel.text = dto.temp
 			
-			if let iamgeURL = URL(string: "http://l.yimg.com/a/i/us/we/52/\(dto.weatherCode).gif"),
-			   let weatherImageData = try? Data(contentsOf: iamgeURL) {
-				self.weatherImageView.image = UIImage(data: weatherImageData)
+			DispatchQueue.global().async {
+				if let imageData = self.cache?.imageCache.object(forKey: String(dto.weatherCode) as NSString ) {
+					DispatchQueue.main.async {
+						self.weatherImageView.image = UIImage(data: imageData as Data)
+					}
+					
+				}
+				
+				if let iamgeURL = URL(string: "http://l.yimg.com/a/i/us/we/52/\(dto.weatherCode).gif"),
+				   let weatherImageData = try? Data(contentsOf: iamgeURL) {
+					DispatchQueue.main.async {
+						self.cache?.imageCache.setObject(weatherImageData as NSData, forKey: String(dto.weatherCode) as NSString )
+						self.weatherImageView.image = UIImage(data: weatherImageData)
+					}
+					
+				}
 			}
+
 		}
 
+	}
+	
+	override func prepareForReuse() {
+		super.prepareForReuse()
+
+		self.weekendLabel.text = ""
+		self.minMaxTempLabel.text = ""
+		self.dateLabel.text = ""
+		self.weatherImageView.image = nil
 	}
 }

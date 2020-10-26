@@ -24,8 +24,24 @@ class BaseTableViewCell: UITableViewCell {
 	
 	
 	// MARK: Func
-	func configureUI() { }
+	
+	override func updateConstraints() {
+		if !self.didSetupConstaints {
+			self.setupConstraints()
+			self.didSetupConstaints = true
+		}
+		super.updateConstraints()
+	}
+	
+	func configure() {
+		self.setNeedsUpdateConstraints()
+	}
+	
+	func configureUI() {
+		self.contentView.backgroundColor = .white
+	}
 	
 	func setupConstraints() {}
 }
+
 

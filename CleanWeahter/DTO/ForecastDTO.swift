@@ -17,4 +17,12 @@ struct ForecastDTO {
 	var temp: String {
 		return "\(maxTemp)-\(minTemp)"
 	}
+	
+	init(weekend: String, date: Date, minTemp: Int, maxTemp: Int, weatherCode: Int) {
+		self.weekend = weekend
+		self.date = date
+		self.minTemp = minTemp
+		self.maxTemp = maxTemp
+		self.weatherCode = weatherCode
+	}
 }
