@@ -23,6 +23,13 @@ class MainViewController: BaseViewController, MainDisplayLogic {
 	
 	// MARK: Object lifecycle
 	
+	let tableView: UITableView = {
+		let tableView = UITableView()
+		tableView.translatesAutoresizingMaskIntoConstraints = false
+		tableView.tableFooterView = UIView()
+		return tableView
+	}()
+	
 	override init() {
 		super.init()
 		setup()
@@ -31,6 +38,19 @@ class MainViewController: BaseViewController, MainDisplayLogic {
 	required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 		setup()
+	}
+	
+	override func configureUI() {
+		self.view.addSubview(tableView)
+	}
+	
+	override func setupConstraints() {
+		NSLayoutConstraint.activate([
+			tableView.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor),
+			tableView.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor),
+			tableView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
+			tableView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor)
+		])
 	}
 	
 	// MARK: Setup
