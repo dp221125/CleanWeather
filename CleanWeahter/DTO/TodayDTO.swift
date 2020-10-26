@@ -12,5 +12,5 @@ struct TodayDTO {
 	let regionName: String
 	let weather: String
 	let temp: String
-	let weatherImageURL: String
+	let weatherCode: Int
 }

@@ -59,7 +59,7 @@ class TodayCell: BaseTableViewCell {
 	
 	private let lineView: UIView = {
 		let lineView = UIView()
-		lineView.backgroundColor = .systemBackground
+		lineView.backgroundColor = .systemOrange
 		lineView.translatesAutoresizingMaskIntoConstraints = false
 		return lineView
 	}()
@@ -84,7 +84,6 @@ class TodayCell: BaseTableViewCell {
 	override func setupConstraints() {
 		
 		NSLayoutConstraint.activate([
-			cityLabel.heightAnchor.constraint(equalToConstant: 44),
 			cityLabel.centerXAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.centerXAnchor),
 			cityLabel.topAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.topAnchor, constant: 16),
 		])
@@ -102,7 +101,6 @@ class TodayCell: BaseTableViewCell {
 		NSLayoutConstraint.activate([
 			bottomStackView.centerXAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.centerXAnchor),
 			bottomStackView.topAnchor.constraint(equalTo: weatherLabel.bottomAnchor, constant: 8),
-			bottomStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16),
 			bottomStackView.widthAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.widthAnchor, constant: -32),
 		])
 		
@@ -124,7 +122,7 @@ class TodayCell: BaseTableViewCell {
 			
 			self.tempLabel.text = todayDTO.temp
 			
-			if let iamgeURL = URL(string: todayDTO.weatherImageURL),
+			if let iamgeURL = URL(string: "http://l.yimg.com/a/i/us/we/52/\(todayDTO.weatherCode).gif"),
 			   let weatherImageData = try? Data(contentsOf: iamgeURL) {
 				self.weatherImageView.image = UIImage(data: weatherImageData)
 			}

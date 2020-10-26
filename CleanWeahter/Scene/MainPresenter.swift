@@ -13,10 +13,13 @@
 import UIKit
 
 protocol MainPresentationLogic {
+	func reloadTableView(weather: Main.FetchWeather.Response)
 	func showErrorAlert(errorResponse: Main.MainError.Response)
 }
 
 class MainPresenter: MainPresentationLogic {
+
+	
 
 	weak var viewController: MainDisplayLogic?
 	
@@ -25,6 +28,11 @@ class MainPresenter: MainPresentationLogic {
 		let viewModel = Main.MainError.ViewModel(localError: errorResponse.error.localizedDescription)
 		viewController?.showErrorAlert(errorViewModel: viewModel)
 		
+	}
+	
+	func reloadTableView(weather: Main.FetchWeather.Response) {
+		let viewModel = Main.FetchWeather.ViewModel(weather: weather.weather)
+		viewController?.reloadData(viewModel: viewModel)
 	}
 	
 }

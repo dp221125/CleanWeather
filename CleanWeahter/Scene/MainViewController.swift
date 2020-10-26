@@ -14,12 +14,14 @@ import UIKit
 
 protocol MainDisplayLogic: class {
 	func showErrorAlert(errorViewModel: Main.MainError.ViewModel)
+	func reloadData(viewModel: Main.FetchWeather.ViewModel)
 }
 
 class MainViewController: BaseViewController, MainDisplayLogic {
 	
 	var interactor: MainBusinessLogic?
 	var router: (NSObjectProtocol & MainRoutingLogic & MainDataPassing)?
+	var weather: Weather?
 	
 	// MARK: Object lifecycle
 	
@@ -28,6 +30,8 @@ class MainViewController: BaseViewController, MainDisplayLogic {
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		tableView.tableFooterView = UIView()
 		tableView.register(TodayCell.self, forCellReuseIdentifier: "\(TodayCell.self)")
+		tableView.dataSource = self
+		tableView.delegate = self
 		return tableView
 	}()
 	
@@ -76,7 +80,7 @@ class MainViewController: BaseViewController, MainDisplayLogic {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		requestFetchData()
-
+		
 	}
 	
 	func requestFetchData() {
@@ -97,5 +101,58 @@ class MainViewController: BaseViewController, MainDisplayLogic {
 			self.present(alert, animated: true)
 		}
 	}
+	
+	func reloadData(viewModel: Main.FetchWeather.ViewModel) {
+		self.weather = viewModel.weather
+		
+		DispatchQueue.main.async {
+			self.tableView.reloadData()
+		}
+	}
+	
+}
+extension MainViewController: UITableViewDataSource {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return 1
+	}
+	
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		
+		guard let weather = self.weather  else {
+			return UITableViewCell()
+		}
+		
+		let celltype = CellType(rawValue: indexPath.row)!
+		if celltype == .tdoay,
+		   let cell = tableView.dequeueReusableCell(withIdentifier: "\(TodayCell.self)", for: indexPath) as? TodayCell {
+			
+			let todayDTO = TodayDTO(cityName: weather.location.city, regionName: weather.location.region, weather: weather.currentObservation.condition.text, temp: "\(weather.currentObservation.condition.temperature)", weatherCode: weather.currentObservation.condition.code)
+			cell.bindUI(todayDTO: todayDTO)
+			
+			return cell
+		}
+		
+		return UITableViewCell()
+		
+	}
+	
+	
+}
+extension MainViewController: UITableViewDelegate {
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return 200
+	}
+}
 
+enum CellType: Int {
+	case tdoay
+	case forcast
+	
+	init?(rawValue: Int) {
+		if rawValue == 0 {
+			self = .tdoay
+		} else {
+			self = .forcast
+		}
+	}
 }

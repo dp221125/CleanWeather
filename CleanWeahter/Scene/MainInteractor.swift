@@ -35,7 +35,8 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
 	func fetchData(request: Main.FetchWeather.Request) {
 		self.worker?.fetchData(request: request)
 			.subscribe(onNext: { weather in
-				print(weather)
+				let response = Main.FetchWeather.Response(weather: weather)
+				self.presenter?.reloadTableView(weather: response)
 			}, onError: { error in
 				let response = Main.MainError.Response(error: error)
 				self.presenter?.showErrorAlert(errorResponse: response)

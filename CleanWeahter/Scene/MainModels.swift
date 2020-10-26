@@ -22,8 +22,13 @@ enum Main {
 			let unit: String
 		}
 		
-		struct Response { }
-		struct ViewModel { }
+		struct Response {
+			let weather: Weather
+		}
+		
+		struct ViewModel {
+			let weather: Weather
+		}
 	}
 	
 	enum MainError {
