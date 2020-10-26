@@ -26,8 +26,8 @@ class OAuthInterceptor: RequestInterceptor {
 		
 		let key = parseKeys()
 		
-		self.oauthSwift = OAuth1Swift(consumerKey: parseKeys().consumerKey,
-									  consumerSecret: parseKeys().consumerSecret)
+		self.oauthSwift = OAuth1Swift(consumerKey: key.consumerKey,
+									  consumerSecret: key.consumerSecret)
 	}
 	
 	public func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, MoyaError>) -> Void) {
