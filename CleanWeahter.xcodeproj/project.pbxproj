@@ -11,6 +11,8 @@
 		C39C446B2546E9720071320B /* TodayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39C446A2546E9720071320B /* TodayCell.swift */; };
 		C39C446F2546E9820071320B /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39C446E2546E9820071320B /* BaseTableViewCell.swift */; };
 		C39C448A2546F3900071320B /* TodayDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39C44892546F3900071320B /* TodayDTO.swift */; };
+		C39C448E25470F750071320B /* ForecastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39C448D25470F750071320B /* ForecastCell.swift */; };
+		C39C44922547116E0071320B /* ForecastDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39C44912547116E0071320B /* ForecastDTO.swift */; };
 		C3CF14B7254691AE007E80FB /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CF14B1254691AE007E80FB /* MainPresenter.swift */; };
 		C3CF14B8254691AE007E80FB /* MainWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CF14B2254691AE007E80FB /* MainWorker.swift */; };
 		C3CF14B9254691AE007E80FB /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CF14B3254691AE007E80FB /* MainRouter.swift */; };
@@ -40,6 +42,8 @@
 		C39C446A2546E9720071320B /* TodayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayCell.swift; sourceTree = "<group>"; };
 		C39C446E2546E9820071320B /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		C39C44892546F3900071320B /* TodayDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDTO.swift; sourceTree = "<group>"; };
+		C39C448D25470F750071320B /* ForecastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastCell.swift; sourceTree = "<group>"; };
+		C39C44912547116E0071320B /* ForecastDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastDTO.swift; sourceTree = "<group>"; };
 		C3CF14B1254691AE007E80FB /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		C3CF14B2254691AE007E80FB /* MainWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWorker.swift; sourceTree = "<group>"; };
 		C3CF14B3254691AE007E80FB /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
@@ -98,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				C39C446A2546E9720071320B /* TodayCell.swift */,
+				C39C448D25470F750071320B /* ForecastCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -106,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				C39C44892546F3900071320B /* TodayDTO.swift */,
+				C39C44912547116E0071320B /* ForecastDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -347,6 +353,7 @@
 			files = (
 				C3CF14BA254691AE007E80FB /* MainModels.swift in Sources */,
 				C3E99F7225465CB5002E2A3F /* MainRepository.swift in Sources */,
+				C39C448E25470F750071320B /* ForecastCell.swift in Sources */,
 				C3CF14B9254691AE007E80FB /* MainRouter.swift in Sources */,
 				C39C448A2546F3900071320B /* TodayDTO.swift in Sources */,
 				C3E99FA52546662A002E2A3F /* CommonFunc.swift in Sources */,
@@ -363,6 +370,7 @@
 				C3E99F20254652AD002E2A3F /* NetworkingProtocol.swift in Sources */,
 				C3E99EF325464E30002E2A3F /* AppDelegate.swift in Sources */,
 				C3CF14C725469654007E80FB /* Weather.swift in Sources */,
+				C39C44922547116E0071320B /* ForecastDTO.swift in Sources */,
 				C3CF14BB254691AE007E80FB /* MainViewController.swift in Sources */,
 				C3CF14B8254691AE007E80FB /* MainWorker.swift in Sources */,
 				C3E99EF525464E30002E2A3F /* SceneDelegate.swift in Sources */,
