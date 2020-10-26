@@ -23,10 +23,11 @@ class MainViewController: BaseViewController, MainDisplayLogic {
 	
 	// MARK: Object lifecycle
 	
-	let tableView: UITableView = {
+	lazy var tableView: UITableView = {
 		let tableView = UITableView()
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		tableView.tableFooterView = UIView()
+		tableView.register(TodayCell.self, forCellReuseIdentifier: "\(TodayCell.self)")
 		return tableView
 	}()
 	
