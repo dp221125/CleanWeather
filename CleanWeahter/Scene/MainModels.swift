@@ -18,7 +18,6 @@ enum Main {
 	enum FetchWeather {
 		
 		struct Request {
-			let location: CLLocationCoordinate2D
 			let unit: String
 		}
 		

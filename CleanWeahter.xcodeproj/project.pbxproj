@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B06C92FD4C1D5C8EC507474D /* Pods_CleanWeahter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7891AA3805F674B1DED8D2DE /* Pods_CleanWeahter.framework */; };
+		C34968F825480D6000717B00 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34968F725480D6000717B00 /* LocationManager.swift */; };
 		C39C446B2546E9720071320B /* TodayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39C446A2546E9720071320B /* TodayCell.swift */; };
 		C39C446F2546E9820071320B /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39C446E2546E9820071320B /* BaseTableViewCell.swift */; };
 		C39C448A2546F3900071320B /* TodayDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39C44892546F3900071320B /* TodayDTO.swift */; };
@@ -39,6 +40,7 @@
 		7891AA3805F674B1DED8D2DE /* Pods_CleanWeahter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CleanWeahter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99AB0B37B487DF8C621B758B /* Pods-CleanWeahter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CleanWeahter.debug.xcconfig"; path = "Target Support Files/Pods-CleanWeahter/Pods-CleanWeahter.debug.xcconfig"; sourceTree = "<group>"; };
 		B791433AA4AEA081CA141038 /* Pods-CleanWeahter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CleanWeahter.release.xcconfig"; path = "Target Support Files/Pods-CleanWeahter/Pods-CleanWeahter.release.xcconfig"; sourceTree = "<group>"; };
+		C34968F725480D6000717B00 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		C39C446A2546E9720071320B /* TodayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayCell.swift; sourceTree = "<group>"; };
 		C39C446E2546E9820071320B /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		C39C44892546F3900071320B /* TodayDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayDTO.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				C3E99FA42546662A002E2A3F /* CommonFunc.swift */,
+				C34968F725480D6000717B00 /* LocationManager.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				C3E99EF325464E30002E2A3F /* AppDelegate.swift in Sources */,
 				C3CF14C725469654007E80FB /* Weather.swift in Sources */,
 				C39C44922547116E0071320B /* ForecastDTO.swift in Sources */,
+				C34968F825480D6000717B00 /* LocationManager.swift in Sources */,
 				C3CF14BB254691AE007E80FB /* MainViewController.swift in Sources */,
 				C3CF14B8254691AE007E80FB /* MainWorker.swift in Sources */,
 				C3E99EF525464E30002E2A3F /* SceneDelegate.swift in Sources */,

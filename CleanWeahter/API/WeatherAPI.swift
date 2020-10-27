@@ -10,7 +10,7 @@ import Foundation
 import Moya
 
 enum WeatherAPI {
-	case forecast(location: CLLocationCoordinate2D, unit: String)
+	case forecast(location: CLLocation, unit: String)
 }
 
 extension WeatherAPI: TargetType {
@@ -47,8 +47,8 @@ extension WeatherAPI: TargetType {
 	var parameters: [String: Any]? {
 		switch self {
 		case .forecast(let location, let unit):
-				return ["lat": location.latitude,
-						"lon": location.longitude,
+			return ["lat": location.coordinate.latitude,
+					"lon": location.coordinate.longitude,
 						"format": "json",
 						"u": unit]
 		}

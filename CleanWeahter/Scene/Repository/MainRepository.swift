@@ -13,7 +13,7 @@ import RxSwift
 import RxCocoa
 
 protocol MainRemoteRepositoryProtocol: class {
-	func requestWeather(location: CLLocationCoordinate2D, unit: String) -> Single<Response>
+	func requestWeather(location: CLLocation, unit: String) -> Single<Response>
 }
 
 protocol MainLocalRepositoryProtocol { }
@@ -28,7 +28,7 @@ final class MainRepository: MainRepositoryProtocol {
 		self.network = network
 	}
 
-	func requestWeather(location: CLLocationCoordinate2D, unit: String) -> Single<Response> {
+	func requestWeather(location: CLLocation, unit: String) -> Single<Response> {
 		return self.network.request(WeatherAPI.forecast(location: location, unit: unit))
 	}
 }

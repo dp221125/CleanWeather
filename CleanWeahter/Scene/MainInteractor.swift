@@ -33,14 +33,16 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
 	}
 	
 	func fetchData(request: Main.FetchWeather.Request) {
-		self.worker?.fetchData(request: request)
-			.subscribe(onNext: { weather in
+		self.worker?.fetchData(request: request, completion: { result in
+			switch result {
+			case .success(let weather):
 				let response = Main.FetchWeather.Response(weather: weather)
 				self.presenter?.reloadTableView(weather: response)
-			}, onError: { error in
+			case .failure(let error):
 				let response = Main.MainError.Response(error: error)
 				self.presenter?.showErrorAlert(errorResponse: response)
-			}).disposed(by: disposeBag)
+			}
+		})
 	}
 
 }

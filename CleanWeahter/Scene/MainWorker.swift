@@ -15,22 +15,46 @@ import UIKit
 import RxSwift
 
 protocol MainWorkerNetworking {
-	func fetchData(request: Main.FetchWeather.Request) -> Observable<Weather>
+	func fetchData(request: Main.FetchWeather.Request, completion: @escaping (Result<Weather, Error>) -> Void)
 }
 class MainWorker: MainWorkerNetworking {
 	
 	let mainRepository: MainRepository
+	var locaitonManager: LocationManager?
+	private var disposeBag: DisposeBag = DisposeBag()
 	
 	init(mainRepository: MainRepository = MainRepository()) {
 		self.mainRepository = mainRepository
 	}
 	
-	func fetchData(request: Main.FetchWeather.Request) -> Observable<Weather> {
-		print("CALL")
-		return self.mainRepository.network.request(WeatherAPI.forecast(location: request.location, unit: request.unit))
-			.map { try JSONDecoder().decode(Weather.self, from: $0.data) }
-			.asObservable()
+	func fetchData(request: Main.FetchWeather.Request, completion: @escaping (Result<Weather, Error>) -> Void) {
 
+		self.locaitonManager = LocationManager(notPermissionMessage: { [weak self] isPermission in
+			guard let self = self else { return }
+			
+			if isPermission {
+				self.locaitonManager?.requestLocation(location: {  location in
+					self.requetWeather(location: location, unit: request.unit, completion: completion)
+				})
+			} else {
+				let location = CLLocation(latitude: 35.9084351, longitude: 128.7990138)
+				self.requetWeather(location: location, unit: request.unit, completion: completion)
+				
+			}
+			
+		})
 	}
+	
+	func requetWeather(location: CLLocation, unit: String, completion: @escaping (Result<Weather, Error>) -> Void) {
+		
+		self.mainRepository.network.request(WeatherAPI.forecast(location: location, unit: unit))
+		   .map { try JSONDecoder().decode(Weather.self, from: $0.data) }
+		   .subscribe { weather in
+			   completion(.success(weather))
+		   } onError: { error in
+			   completion(.failure(error))
+		   }.disposed(by: self.disposeBag)
+	}
+	
 
 }

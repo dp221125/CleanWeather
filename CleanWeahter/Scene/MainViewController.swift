@@ -88,11 +88,9 @@ class MainViewController: BaseViewController, MainDisplayLogic {
 	
 	func requestFetchData() {
 		
-		let mockLocation = CLLocationCoordinate2D(latitude: 35.9084351,
-												  longitude: 128.7990138)
-		let request = Main.FetchWeather.Request(location: mockLocation,
-												unit: "c")
+		let request = Main.FetchWeather.Request(unit: "c")
 		self.interactor?.fetchData(request: request)
+		
 	}
 	
 	func showErrorAlert(errorViewModel: Main.MainError.ViewModel) {
