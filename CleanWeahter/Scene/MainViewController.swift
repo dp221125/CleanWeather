@@ -54,10 +54,10 @@ class MainViewController: BaseViewController, MainDisplayLogic {
 	
 	override func setupConstraints() {
 		NSLayoutConstraint.activate([
-			tableView.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor),
-			tableView.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor),
-			tableView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
-			tableView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor)
+			tableView.widthAnchor.constraint(equalTo: self.view.widthAnchor),
+			tableView.heightAnchor.constraint(equalTo: self.view.heightAnchor),
+			tableView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+			tableView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
 		])
 	}
 	
