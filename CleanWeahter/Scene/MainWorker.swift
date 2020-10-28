@@ -33,11 +33,11 @@ class MainWorker: MainWorkerNetworking {
 			guard let self = self else { return }
 			
 			if isPermission {
-				self.locaitonManager?.requestLocation(location: {  location in
+				self.locaitonManager?.requestLocation(location: { location in
 					self.requetWeather(location: location, unit: request.unit, completion: completion)
 				})
 			} else {
-				let location = CLLocation(latitude: 35.9084351, longitude: 128.7990138)
+				let location = CLLocation(latitude: 37.5642135, longitude: 127.0016985)
 				self.requetWeather(location: location, unit: request.unit, completion: completion)
 				
 			}
