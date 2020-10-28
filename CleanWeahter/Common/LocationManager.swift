@@ -13,7 +13,8 @@ class LocationManager: NSObject {
 	private let cllocationManager: CLLocationManager
 	
 	var isPermerission: ((Bool) -> Void)
-	var location: ((CLLocation) -> Void)? = nil
+//	var location: ((CLLocation) -> Void)? = nil
+    var location: ((Result<CLLocation, Error>) -> Void)? = nil
 	
 	init(notPermissionMessage: @escaping ((Bool) -> Void)) {
 		self.cllocationManager = CLLocationManager()
@@ -28,7 +29,7 @@ class LocationManager: NSObject {
 		self.cllocationManager.requestWhenInUseAuthorization()
 	}
 	
-	func requestLocation(location: @escaping ((CLLocation) -> Void)) {
+	func requestLocation(location: @escaping ((Result<CLLocation, Error>) -> Void)) {
 		self.location = location
 		self.cllocationManager.requestLocation()
 	}
@@ -46,10 +47,12 @@ extension LocationManager: CLLocationManagerDelegate {
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 		guard let currentLocation = locations.first,
 			  let location = self.location else { return }
-		location(currentLocation)
+        location(.success(currentLocation))
 	}
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error.localizedDescription)
+        guard let location = self.location else { return }
+        location(.failure(error))
     }
 }
