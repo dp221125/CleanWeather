@@ -37,6 +37,18 @@ class MainViewController: BaseViewController, MainDisplayLogic {
 		tableView.allowsSelection = false
 		return tableView
 	}()
+    
+    //MARK:- View Item
+    let loadIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.hidesWhenStopped = true
+        indicator.color = .white
+        indicator.backgroundColor = UIColor(white: 0.3, alpha: 0.8)
+        indicator.layer.cornerRadius = 10
+        indicator.clipsToBounds = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
 	
 	override init() {
 		super.init()
@@ -49,7 +61,9 @@ class MainViewController: BaseViewController, MainDisplayLogic {
 	}
 	
 	override func configureUI() {
-		self.view.addSubview(tableView)
+        [tableView, loadIndicator].forEach {
+            self.view.addSubview($0)
+        }
 	}
 	
 	override func setupConstraints() {
@@ -59,6 +73,13 @@ class MainViewController: BaseViewController, MainDisplayLogic {
 			tableView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
 			tableView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
 		])
+        
+        NSLayoutConstraint.activate([
+            loadIndicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            loadIndicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            loadIndicator.widthAnchor.constraint(equalToConstant: 60),
+            loadIndicator.heightAnchor.constraint(equalTo: loadIndicator.widthAnchor)
+        ])
 	}
 	
 	// MARK: Setup
@@ -87,7 +108,7 @@ class MainViewController: BaseViewController, MainDisplayLogic {
 	}
 	
 	func requestFetchData() {
-		
+        self.loadIndicator.startAnimating()
 		let request = Main.FetchWeather.Request(unit: "c")
 		self.interactor?.fetchData(request: request)
 		
@@ -95,6 +116,7 @@ class MainViewController: BaseViewController, MainDisplayLogic {
 	
     func showErrorAlert(viewModel: Main.FetchWeather.ViewModel) {
 		DispatchQueue.main.async {
+            self.loadIndicator.stopAnimating()
             let alert = UIAlertController(title: "Error", message: viewModel.error?.localizedDescription, preferredStyle: .alert)
 			let okAction = UIAlertAction(title: "확인", style: . default)
 			alert.addAction(okAction)
@@ -107,6 +129,7 @@ class MainViewController: BaseViewController, MainDisplayLogic {
 		self.weather = viewModel.weather
 		
 		DispatchQueue.main.async {
+            self.loadIndicator.stopAnimating()
 			self.tableView.reloadData()
 		}
 	}
