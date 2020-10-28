@@ -37,7 +37,9 @@ class LocationManager: NSObject {
 extension LocationManager: CLLocationManagerDelegate {
 	func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
 		switch manager.accuracyAuthorization {
-		case .fullAccuracy, .reducedAccuracy:
+        case .reducedAccuracy:
+            isPermerission(true)
+		case .fullAccuracy:
 			isPermerission(true)
 		default:
 			isPermerission(false)
@@ -48,11 +50,16 @@ extension LocationManager: CLLocationManagerDelegate {
 		guard let currentLocation = locations.first,
 			  let location = self.location else { return }
         location(.success(currentLocation))
+        
+        self.cllocationManager.stopUpdatingLocation()
 	}
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error.localizedDescription)
         guard let location = self.location else { return }
         location(.failure(error))
+        
+        
+        self.cllocationManager.stopUpdatingLocation()
     }
 }

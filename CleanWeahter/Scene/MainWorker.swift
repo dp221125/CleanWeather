@@ -37,8 +37,9 @@ class MainWorker: MainWorkerNetworking {
                     switch result {
                     case .success(let location):
                         self.requetWeather(location: location, unit: request.unit, completion: completion)
-                    case .failure(let error):
-                        completion(.failure(error))
+                    case .failure:
+                        let location = CLLocation(latitude: 37.5642135, longitude: 127.0016985)
+                        self.requetWeather(location: location, unit: request.unit, completion: completion)
                     }
 				})
 			} else {
