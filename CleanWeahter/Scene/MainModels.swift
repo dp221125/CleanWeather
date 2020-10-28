@@ -22,23 +22,25 @@ enum Main {
 		}
 		
 		struct Response {
-			let weather: Weather
+			let weather: Weather?
+            let error: Error?
+            
+            init(weather: Weather? = nil, error: Error? = nil) {
+                self.weather = weather
+                self.error = error
+            }
 		}
 		
 		struct ViewModel {
-			let weather: Weather
+			let weather: Weather?
+            let error: Error?
+            
+            init(weather: Weather? = nil, error: Error? = nil) {
+                self.weather = weather
+                self.error = error
+            }
 		}
 	}
-	
-	enum MainError {
-		struct Request { }
-		struct Response {
-			let error: Error
-		}
-		
-		struct ViewModel {
-			let localError: String
-		}
-	}
+
 	
 }

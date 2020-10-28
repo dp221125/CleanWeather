@@ -13,26 +13,23 @@
 import UIKit
 
 protocol MainPresentationLogic {
-	func reloadTableView(weather: Main.FetchWeather.Response)
-	func showErrorAlert(errorResponse: Main.MainError.Response)
+	func displayTableView(response: Main.FetchWeather.Response)
 }
 
 class MainPresenter: MainPresentationLogic {
 
-	
-
 	weak var viewController: MainDisplayLogic?
 	
-	func showErrorAlert(errorResponse: Main.MainError.Response) {
-		
-		let viewModel = Main.MainError.ViewModel(localError: errorResponse.error.localizedDescription)
-		viewController?.showErrorAlert(errorViewModel: viewModel)
-		
-	}
-	
-	func reloadTableView(weather: Main.FetchWeather.Response) {
-		let viewModel = Main.FetchWeather.ViewModel(weather: weather.weather)
-		viewController?.reloadData(viewModel: viewModel)
+	func displayTableView(response: Main.FetchWeather.Response) {
+        
+        if let error = response.error {
+            let viewModel = Main.FetchWeather.ViewModel(error: error)
+            viewController?.showErrorAlert(viewModel: viewModel)
+        } else if let weather = response.weather {
+            let viewModel = Main.FetchWeather.ViewModel(weather: weather)
+            viewController?.reloadData(viewModel: viewModel)
+        }
+
 	}
 	
 }

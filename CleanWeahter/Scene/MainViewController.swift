@@ -13,7 +13,7 @@ import CoreLocation
 import UIKit
 
 protocol MainDisplayLogic: class {
-	func showErrorAlert(errorViewModel: Main.MainError.ViewModel)
+	func showErrorAlert(viewModel: Main.FetchWeather.ViewModel)
 	func reloadData(viewModel: Main.FetchWeather.ViewModel)
 }
 
@@ -93,9 +93,9 @@ class MainViewController: BaseViewController, MainDisplayLogic {
 		
 	}
 	
-	func showErrorAlert(errorViewModel: Main.MainError.ViewModel) {
+    func showErrorAlert(viewModel: Main.FetchWeather.ViewModel) {
 		DispatchQueue.main.async {
-			let alert = UIAlertController(title: "Error", message: errorViewModel.localError, preferredStyle: .alert)
+            let alert = UIAlertController(title: "Error", message: viewModel.error?.localizedDescription, preferredStyle: .alert)
 			let okAction = UIAlertAction(title: "확인", style: . default)
 			alert.addAction(okAction)
 			

@@ -36,11 +36,11 @@ class MainInteractor: MainBusinessLogic, MainDataStore {
 		self.worker?.fetchData(request: request, completion: { result in
 			switch result {
 			case .success(let weather):
-				let response = Main.FetchWeather.Response(weather: weather)
-				self.presenter?.reloadTableView(weather: response)
+                let response = Main.FetchWeather.Response(weather: weather)
+				self.presenter?.displayTableView(response: response)
 			case .failure(let error):
-				let response = Main.MainError.Response(error: error)
-				self.presenter?.showErrorAlert(errorResponse: response)
+				let response = Main.FetchWeather.Response(error: error)
+                self.presenter?.displayTableView(response: response)
 			}
 		})
 	}
