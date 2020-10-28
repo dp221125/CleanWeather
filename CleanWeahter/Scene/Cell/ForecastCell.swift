@@ -7,19 +7,9 @@
 
 import UIKit
 
-class Cache {
-	
-	let imageCache: NSCache<NSString, NSData>
-	
-	init() {
-		self.imageCache = NSCache<NSString, NSData>()
-	}
-	
-}
-
 class ForecastCell: BaseTableViewCell {
 	
-	weak var cache: Cache?
+	weak var cache: NSCache<NSString, NSData>?
 	
 	let weekendLabel: UILabel = {
 		let weekendLabel = UILabel()
@@ -52,7 +42,7 @@ class ForecastCell: BaseTableViewCell {
 		return weatherImageView
 	}()
 	
-	func configure(cache: Cache) {
+	func configure(cache: NSCache<NSString, NSData>) {
 		super.configure()
 		self.cache = cache
 	}
@@ -108,7 +98,7 @@ class ForecastCell: BaseTableViewCell {
 			self.minMaxTempLabel.text = dto.temp
 			
 			DispatchQueue.global().async {
-				if let imageData = self.cache?.imageCache.object(forKey: String(dto.weatherCode) as NSString ) {
+				if let imageData = self.cache?.object(forKey: String(dto.weatherCode) as NSString ) {
 					DispatchQueue.main.async {
 						self.weatherImageView.image = UIImage(data: imageData as Data)
 					}
@@ -118,7 +108,7 @@ class ForecastCell: BaseTableViewCell {
 				if let iamgeURL = URL(string: "http://l.yimg.com/a/i/us/we/52/\(dto.weatherCode).gif"),
 				   let weatherImageData = try? Data(contentsOf: iamgeURL) {
 					DispatchQueue.main.async {
-						self.cache?.imageCache.setObject(weatherImageData as NSData, forKey: String(dto.weatherCode) as NSString )
+						self.cache?.setObject(weatherImageData as NSData, forKey: String(dto.weatherCode) as NSString )
 						self.weatherImageView.image = UIImage(data: weatherImageData)
 					}
 					

@@ -9,7 +9,7 @@ import UIKit
 
 class TodayCell: BaseTableViewCell {
 	
-	weak var cache: Cache?
+	weak var cache: NSCache<NSString, NSData>?
 	
 	private let cityLabel: UILabel = {
 		let cityLabel = UILabel()
@@ -66,7 +66,7 @@ class TodayCell: BaseTableViewCell {
 		return lineView
 	}()
 	
-	func configure(cache: Cache) {
+	func configure(cache: NSCache<NSString, NSData>) {
 		super.configure()
 		self.cache = cache
 	}
@@ -124,7 +124,7 @@ class TodayCell: BaseTableViewCell {
 
 		DispatchQueue.main.async {
 			
-			if let imageData = self.cache?.imageCache.object(forKey: String(todayDTO.weatherCode) as NSString ) {
+			if let imageData = self.cache?.object(forKey: String(todayDTO.weatherCode) as NSString ) {
 				DispatchQueue.main.async {
 					self.weatherImageView.image = UIImage(data: imageData as Data)
 				}
@@ -141,7 +141,7 @@ class TodayCell: BaseTableViewCell {
 				if let iamgeURL = URL(string: "http://l.yimg.com/a/i/us/we/52/\(todayDTO.weatherCode).gif"),
 				   let weatherImageData = try? Data(contentsOf: iamgeURL) {
 					DispatchQueue.main.async {
-						self.cache?.imageCache.setObject(weatherImageData as NSData, forKey: String(todayDTO.weatherCode) as NSString )
+						self.cache?.setObject(weatherImageData as NSData, forKey: String(todayDTO.weatherCode) as NSString )
 						self.weatherImageView.image = UIImage(data: weatherImageData)
 					}
 					

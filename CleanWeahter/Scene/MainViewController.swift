@@ -22,7 +22,7 @@ class MainViewController: BaseViewController, MainDisplayLogic {
 	var interactor: MainBusinessLogic?
 	var router: (NSObjectProtocol & MainRoutingLogic & MainDataPassing)?
 	var weather: Weather?
-	var cache = Cache()
+    let imageCache: NSCache<NSString, NSData>
 	
 	// MARK: Object lifecycle
 	
@@ -51,11 +51,13 @@ class MainViewController: BaseViewController, MainDisplayLogic {
     }()
 	
 	override init() {
+        self.imageCache = NSCache<NSString, NSData>()
 		super.init()
 		setup()
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
+        self.imageCache = NSCache<NSString, NSData>()
 		super.init(coder: aDecoder)
 		setup()
 	}
@@ -154,14 +156,14 @@ extension MainViewController: UITableViewDataSource {
 		let celltype = CellType(rawValue: indexPath.row)!
 		if celltype == .today,
 		   let cell = tableView.dequeueReusableCell(withIdentifier: "\(TodayCell.self)", for: indexPath) as? TodayCell {
-			cell.configure(cache: self.cache)
+			cell.configure(cache: self.imageCache)
 			let todayDTO = TodayDTO(cityName: weather.location.city, regionName: weather.location.region, weather: weather.currentObservation.condition.text, temp: "\(weather.currentObservation.condition.temperature)", weatherCode: weather.currentObservation.condition.code)
 			cell.bindUI(todayDTO: todayDTO)
 			
 			return cell
 		} else if celltype == .forcast,
 				  let cell = tableView.dequeueReusableCell(withIdentifier: "\(ForecastCell.self)", for: indexPath) as? ForecastCell {
-			cell.configure(cache: self.cache)
+			cell.configure(cache: self.imageCache)
 			
 			let forcast = weather.forecasts[indexPath.row - 1]
 			let dto = ForecastDTO(weekend: forcast.day, date: forcast.date, minTemp: forcast.low, maxTemp: forcast.high, weatherCode: forcast.code)
