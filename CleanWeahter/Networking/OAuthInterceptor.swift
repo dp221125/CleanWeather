@@ -31,11 +31,7 @@ class OAuthInterceptor: RequestInterceptor {
 	public func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, MoyaError>) -> Void) {
 		completion(.success(urlRequest))
 		
-		var config = OAuthSwiftHTTPRequest.Config(
-			urlRequest: urlRequest,
-			paramsLocation: .authorizationHeader,
-			dataEncoding: .utf8
-		)
+		var config = OAuthSwiftHTTPRequest.Config(urlRequest: urlRequest)
 		config.updateRequest(credential: oauthSwift.client.credential)
 		
 		do {
