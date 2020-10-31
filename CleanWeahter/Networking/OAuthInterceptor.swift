@@ -37,7 +37,7 @@ class OAuthInterceptor: RequestInterceptor {
 		do {
 			completion(.success(try OAuthSwiftHTTPRequest.makeRequest(config: config)))
 		} catch {
-			completion(.failure(MoyaError.underlying(error, nil)))
+			completion(.failure(.underlying(error, nil)))
 		}
 	}
 
